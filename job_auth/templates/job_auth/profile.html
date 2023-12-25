@@ -1,0 +1,30 @@
+{% extends "job_post/parent.html" %}
+{% block title %}User Profile{% endblock title %}
+{% block main %}
+<div class="container my-5">
+    {% if messages %}
+    {% for message in messages %}
+    <h4 class="text-center text-{% if message.tags %}{{ message.tags }}{% endif %}">{{message}}</h4>
+    {% endfor %}
+    {% endif %}
+    <h3>Hi, {{request.user}}!</h3>
+
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {{form.non_field_errors}}
+        {% comment %} <img src="{{request.user.userprofile.profile_picture.url }}" alt="Profile Picture"> {% endcomment %}
+        {% for field in profile_form %}
+        {{field.label_tag}}<br>
+        {{field}}{{field.errors}}<br><br>
+        {% endfor %} 
+        {% comment %} <label for="id_profile_picture">Change Profile Picture:</label>
+        <input type="file" name="profile_picture" accept="image/*" id="id_profile_picture"><br> {% endcomment %}
+        
+
+        {% for field in user_form %}
+        {{field.label_tag}}{{field}}{{field.errors}}<br>
+        {% endfor %}
+        <input type="submit" value="Submit" class="btn btn-warning w-25 text-center">
+    </form><br><br>
+</div>
+{% endblock main %}

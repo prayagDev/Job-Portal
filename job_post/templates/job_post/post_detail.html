@@ -1,0 +1,19 @@
+{% extends "job_post/parent.html" %}
+{% block title %}Post Details{% endblock title %}
+{% block main %}
+
+<div class="container m-5">
+<div class="row">
+    <div class="col-lg-10">
+        <center><u><h4>Title: {{my_post.title}}</h4></u></center><br>
+        
+        <h5>Description: {{my_post.description}}</h5>
+        <hr>
+        <p>{{my_post.content}}</p>
+        
+        
+    </div>
+</div>
+</div>
+
+{% endblock main %}

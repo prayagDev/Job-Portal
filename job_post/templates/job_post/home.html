@@ -1,0 +1,50 @@
+{% extends "job_post/parent.html" %}
+{% block title %}Home{% endblock title %}
+{% block main %}
+
+<div class="container m-5">
+    <form action="{% url "search_post" %}">
+        <input type="text" name="title" placeholder="title/skill" required>
+        <input type="text" name="experience" placeholder="fresher/experience" required>
+        <input type="text" name="location" placeholder="work from home/location" required>
+        <button type="submit">Search Job</button>
+    </form>
+    <br><br>
+<div class="row">
+    <div class="col-lg-10">
+        <h1 class="mb-5"><u>Recent Job Postings</u></h1>
+        {% for post in recent_posts %}
+        <div class="col">
+            <h3>Title: {{post.title}}</h3>
+            <h5>Description: {{post.description}}</h5>
+            <p><a href="{% url "post_detail" post.slug %}" target="_blank">Read More..</a></p>
+        </div>
+        {% endfor %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if recent_posts.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ recent_posts.previous_page_number }}">previous</a>
+                {% endif %}
+    
+                <span class="current">
+                    Page {{ recent_posts.number }} of {{ recent_posts.paginator.num_pages }}.
+                </span>
+    
+                {% if recent_posts.has_next %}
+                    <a href="?page={{ recent_posts.next_page_number }}">next</a>
+                    <a href="?page={{ recent_posts.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <h1 class="mb-5"><u>Categories</u></h1>
+        {% for c in category %}
+        <p><a href="{% url "category_post" c.name %}" target="_blank">{{c.name}}</a></p>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+{% endblock main %}
